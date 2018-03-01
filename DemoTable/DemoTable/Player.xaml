@@ -1,49 +1,49 @@
 ﻿<Page x:Class="DemoTable.Player"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:DemoTable"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
       d:DesignHeight="450"
-	  d:DesignWidth="350"
+      d:DesignWidth="350"
       Title="Player">
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="1*"/>
-			<RowDefinition Height="1*"/>
-			<RowDefinition Height="1*"/>
-			<RowDefinition Height="1*"/>
-		</Grid.RowDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
 
-		<Label x:Name="LabelScore"
-			   Margin="5"
-			   Grid.Row="0"
-			   FontSize="40"
-			   HorizontalContentAlignment="Center"
-			   VerticalContentAlignment="Bottom"
-			   Content="{Binding Score}"/>
+        <Label x:Name="LabelScore"
+               Margin="5"
+               Grid.Row="0"
+               FontSize="40"
+               HorizontalContentAlignment="Center"
+               VerticalContentAlignment="Bottom"
+               Content="{Binding Score}"/>
 
-		<Button x:Name="ButtonScore"
-				Margin="5"
-			    Grid.Row="1"
-				FontSize="40"
-				Content="+Score"
-				Click="ButtonScore_Click"/>
+        <Button x:Name="ButtonScore"
+                Margin="5"
+                Grid.Row="1"
+                FontSize="40"
+                Content="+Score"
+                Click="ButtonScore_Click"/>
 
-		<Label x:Name="LabelTimer"
-			   Margin="5"
-			   Grid.Row="2"
-			   FontSize="40"
-			   HorizontalContentAlignment="Center"
-			   VerticalContentAlignment="Bottom"
-			   Content="{Binding timer}"/>
+        <Label x:Name="LabelTimer"
+               Margin="5"
+               Grid.Row="2"
+               FontSize="40"
+               HorizontalContentAlignment="Center"
+               VerticalContentAlignment="Bottom"
+               Content="{Binding Timer}"/>
 
-		<Button x:Name="ButtonJoin"
-				Margin="5"
-			    Grid.Row="3"
-				FontSize="40"
-				Content="Timer"
-				Click="ButtonJoin_Click"/>
-	</Grid>
+        <Button x:Name="ButtonJoin"
+                Margin="5"
+                Grid.Row="3"
+                FontSize="40"
+                Content="Timer"
+                Click="ButtonJoin_Click"/>
+    </Grid>
 </Page>

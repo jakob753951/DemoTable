@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:DemoTable"
         mc:Ignorable="d"
         Title="MainWindow"
-		Height="450"
-		Width="350">
+        Height="450"
+        Width="350"
+        Loaded="Window_Loaded">
 </Window>

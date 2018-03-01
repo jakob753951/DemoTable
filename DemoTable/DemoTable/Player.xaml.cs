@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Phidget22;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,41 +14,57 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
+using Phidget22.Events;
 
 namespace DemoTable
 {
-	/// <summary>
-	/// Interaction logic for Player.xaml
-	/// </summary>
-	public partial class Player : Page, INotifyPropertyChanged
-	{
-		public event PropertyChangedEventHandler PropertyChanged;
-		public Player(MainWindow mainwindow)
-		{
-			InitializeComponent();
-			LabelScore.DataContext = this;
-			mainwindow.GameEnd += Reset;
-		}
+    /// <summary>
+    /// Interaction logic for Player.xaml
+    /// </summary>
+    public partial class Player : Page, INotifyPropertyChanged
+    {
+        MainWindow mw;
+        public event PropertyChangedEventHandler PropertyChanged;
+        public bool isPlayerJoined = false;
 
-		private int score = 0;
-		public int Score
-		{
-			get => score;
-			set
-			{
-				score = value;
-				OnPropertyChanged("Score");
-			}
-		}
+        public Player(MainWindow mainwindow)
+        {
+            InitializeComponent();
+            LabelScore.DataContext = this;
+            mw = mainwindow;
+        }
 
-		private void Reset(object sender, EventArgs e) => Score = 0;
+        private int score = 0;
+        public int Score
+        {
+            get => score;
+            set
+            {
+                score = value;
+                OnPropertyChanged("Score");
+            }
+        }
 
-		private void ButtonScore_Click(object sender, RoutedEventArgs e) => Score++;
+        private double timer = 0;
+        public double Timer
+        {
+            get => timer;
+            set
+            {
+                timer = value;
+                OnPropertyChanged("Timer");
+            }
+        }
 
-		private void ButtonJoin_Click(object sender, RoutedEventArgs e)
-		{
+        private void Reset(object sender, EventArgs e) => Score = 0;
 
-		}
-		private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-	}
+        private void ButtonScore_Click(object sender, RoutedEventArgs e) => Score++;
+
+        private void ButtonJoin_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+    }
 }
