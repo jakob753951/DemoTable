@@ -75,23 +75,6 @@ namespace DemoTable
 
         private void Reset(object sender, EventArgs e) => Score = 0;
 
-        private void ButtonScore_Click(object sender, RoutedEventArgs e)
-        {
-            if (mw.isGameStarted && isPlayerJoined)
-                Score++;
-        }
-
-        private void ButtonJoin_Click(object sender, RoutedEventArgs e)
-        {
-            if(!mw.isGameStarted)
-            {
-                isPlayerJoined = true;
-                Status = "Klar";
-                if(!mw.isCountdownStarted)
-                    mw.StartGame();
-            }
-        }
-
         private void PointButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
         {
             if (mw.isGameStarted && isPlayerJoined && e.State)
@@ -100,6 +83,7 @@ namespace DemoTable
 
         private void JoinButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
         {
+			//TODO: Do we not want people to join mid-game?
             if(e.State && !mw.isGameStarted)
             {
                 isPlayerJoined = true;
