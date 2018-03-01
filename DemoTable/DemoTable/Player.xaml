@@ -8,8 +8,7 @@
       d:DesignHeight="450"
 	  d:DesignWidth="350"
       Title="Player">
-
-    <Grid>
+	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="1*"/>
 			<RowDefinition Height="1*"/>
@@ -25,12 +24,12 @@
 			   VerticalContentAlignment="Bottom"
 			   Content="{Binding Score}"/>
 
-		<Button x:Name="ButtonScoreIncrease"
+		<Button x:Name="ButtonScore"
 				Margin="5"
 			    Grid.Row="1"
 				FontSize="40"
 				Content="+Score"
-				Click="ButtonScoreIncrease_Click"/>
+				Click="ButtonScore_Click"/>
 
 		<Label x:Name="LabelTimer"
 			   Margin="5"
@@ -40,11 +39,11 @@
 			   VerticalContentAlignment="Bottom"
 			   Content="{Binding timer}"/>
 
-		<Button x:Name="ButtonTimer"
+		<Button x:Name="ButtonJoin"
 				Margin="5"
 			    Grid.Row="3"
 				FontSize="40"
 				Content="Timer"
-				Click="ButtonTimer_Click"/>
+				Click="ButtonJoin_Click"/>
 	</Grid>
 </Page>

@@ -40,15 +40,14 @@ namespace DemoTable
 			}
 		}
 
-		private void ButtonScoreIncrease_Click(object sender, RoutedEventArgs e) => Score++;
-
 		private void Reset(object sender, EventArgs e) => Score = 0;
 
-		private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+		private void ButtonScore_Click(object sender, RoutedEventArgs e) => Score++;
 
-		private void ButtonTimer_Click(object sender, RoutedEventArgs e)
+		private void ButtonJoin_Click(object sender, RoutedEventArgs e)
 		{
 
 		}
+		private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
 	}
 }
