@@ -108,3 +108,30 @@ namespace DemoTable
         }
     }
 }
+		public double timer = 10;
+		public MainWindow()
+		{
+			InitializeComponent();
+			for (int i = 0; i < 4; i++)
+			{
+				players.Add(new Player(this));
+				(MainGrid.Children[i+1] as Frame).Content = players[i];
+			}
+			countDown.Interval = new TimeSpan(0,0,0,0,1);
+			countDown.Tick += CountDown_Tick;
+		}
+		private void CountDown_Tick(object sender, EventArgs e)
+		{
+			if(timer > 0)
+			{
+				timer -= 0.001;
+			}
+			else
+			{
+				countDown.Stop();
+				GameEnd.Invoke(this, new EventArgs());
+				timer = 10;
+			}
+		}
+	}
+}

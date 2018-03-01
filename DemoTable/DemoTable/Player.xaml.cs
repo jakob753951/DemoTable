@@ -18,6 +18,23 @@ using Phidget22.Events;
 
 namespace DemoTable
 {
+	/// <summary>
+	/// Interaction logic for Player.xaml
+	/// </summary>
+	public partial class Player : Page, INotifyPropertyChanged
+	{
+		public event PropertyChangedEventHandler PropertyChanged;
+		public Player()
+		{
+			InitializeComponent();
+			LabelScore.DataContext = this;
+		}
+		public Player(MainWindow mainwindow)
+		{
+			InitializeComponent();
+			LabelScore.DataContext = this;
+			mainwindow.GameEnd += Reset;
+		}
     /// <summary>
     /// Interaction logic for Player.xaml
     /// </summary>
@@ -63,8 +80,8 @@ namespace DemoTable
         private void ButtonJoin_Click(object sender, RoutedEventArgs e)
         {
 
-        }
+		}
 
-        private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-    }
+		private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+	}
 }
