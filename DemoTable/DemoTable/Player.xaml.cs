@@ -22,6 +22,11 @@ namespace DemoTable
 	public partial class Player : Page, INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
+		public Player()
+		{
+			InitializeComponent();
+			LabelScore.DataContext = this;
+		}
 		public Player(MainWindow mainwindow)
 		{
 			InitializeComponent();
@@ -40,7 +45,7 @@ namespace DemoTable
 			}
 		}
 
-		private void Reset(object sender, EventArgs e) => Score = 0;
+		public void Reset(object sender, EventArgs e) => Score = 0;
 
 		private void ButtonScore_Click(object sender, RoutedEventArgs e) => Score++;
 
@@ -48,6 +53,7 @@ namespace DemoTable
 		{
 
 		}
+
 		private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
 	}
 }

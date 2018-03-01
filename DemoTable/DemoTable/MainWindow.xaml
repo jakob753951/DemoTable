@@ -6,6 +6,36 @@
         xmlns:local="clr-namespace:DemoTable"
         mc:Ignorable="d"
         Title="MainWindow"
-		Height="450"
-		Width="350">
+		Height="600"
+		Width="1400">
+	<Grid x:Name="MainGrid">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="1*"/>
+			<RowDefinition Height="3*"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="1*"/>
+		</Grid.ColumnDefinitions>
+		<Label x:Name="LabelStatus"
+			   Content="N/A"
+			   FontSize="100"
+			   VerticalContentAlignment="Bottom"
+			   HorizontalContentAlignment="Center"
+			   Grid.ColumnSpan="4"/>
+		<Frame x:Name="zero" 
+			   Grid.Column="0"
+			   Grid.Row="1"/>
+		<Frame x:Name="one" 
+			   Grid.Column="1"
+			   Grid.Row="1"/>
+		<Frame x:Name="two" 
+			   Grid.Column="2"
+			   Grid.Row="1"/>
+		<Frame x:Name="three" 
+			   Grid.Column="3"
+			   Grid.Row="1"/>
+	</Grid>
 </Window>

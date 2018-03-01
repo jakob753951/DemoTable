@@ -30,10 +30,12 @@ namespace DemoTable
 		public double timer = 10;
 		public MainWindow()
 		{
-			for(int i = 0; i < 4; i++)
-				players.Add(new Player(this));
-			AddChild(players[0]);
 			InitializeComponent();
+			for (int i = 0; i < 4; i++)
+			{
+				players.Add(new Player(this));
+				(MainGrid.Children[i+1] as Frame).Content = players[i];
+			}
 			countDown.Interval = new TimeSpan(0,0,0,0,1);
 			countDown.Tick += CountDown_Tick;
 		}
