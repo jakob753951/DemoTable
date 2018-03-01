@@ -47,7 +47,7 @@ namespace DemoTable
         //If the game has started
         public bool isGameStarted = false;
         //The time to display
-        public double Timer = 10;
+        public double Timer = countdownTime;
         //Status to display
         private string status = "Klar";
         public string Status
