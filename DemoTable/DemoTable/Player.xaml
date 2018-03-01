@@ -23,7 +23,7 @@
                VerticalContentAlignment="Bottom"
                Content="{Binding Score}"/>
 
-		<Label x:Name="LabelStatus"
+        <Label x:Name="LabelStatus"
                Margin="5"
                Grid.Row="1"
                FontSize="40"
@@ -31,14 +31,14 @@
                VerticalContentAlignment="Top"
                Content="{Binding Status}"/>
 
-		<Button x:Name="ButtonScore"
+        <Button x:Name="ButtonScore"
                 Margin="5"
                 Grid.Row="2"
                 FontSize="40"
                 Content="+Score"
                 Click="ButtonScore_Click"/>
 
-		<Button x:Name="ButtonJoin"
+        <Button x:Name="ButtonJoin"
                 Margin="5"
                 Grid.Row="3"
                 FontSize="40"

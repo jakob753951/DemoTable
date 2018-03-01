@@ -18,42 +18,43 @@ using Phidget22.Events;
 
 namespace DemoTable
 {
-	/// <summary>
-	/// Interaction logic for Player.xaml
-	/// </summary>
-	public partial class Player : Page, INotifyPropertyChanged
-	{
-		public event PropertyChangedEventHandler PropertyChanged;
+    /// <summary>
+    /// Interaction logic for Player.xaml
+    /// </summary>
+    public partial class Player : Page, INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
         public bool isPlayerJoined = false;
 
-		public DigitalInput PointButton = new DigitalInput();
-		public DigitalInput JoinButton = new DigitalInput();
+        public DigitalInput PointButton = new DigitalInput();
+        public DigitalInput JoinButton = new DigitalInput();
 
-		private MainWindow mw;
+        private MainWindow mw;
 
-		public Player(MainWindow mainWindow, int pointChannel, int joinChannel)
-		{
-			InitializeComponent();
+        public Player(MainWindow mainWindow, int pointChannel, int joinChannel)
+        {
+            InitializeComponent();
 
-			LabelScore.DataContext = this;
+            LabelScore.DataContext = this;
+            LabelStatus.DataContext = this;
 
-			mainWindow.GameEnd += Reset;
+            mainWindow.GameStart += Reset;
 
-			PointButton.Channel = pointChannel;
-			PointButton.StateChange += PointButton_StateChange;
-			PointButton.Open();
+            PointButton.Channel = pointChannel;
+            PointButton.StateChange += PointButton_StateChange;
+            PointButton.Open();
 
-			JoinButton.Channel = joinChannel;
-			JoinButton.StateChange += JoinButton_StateChange;
-			JoinButton.Open();
+            JoinButton.Channel = joinChannel;
+            JoinButton.StateChange += JoinButton_StateChange;
+            JoinButton.Open();
 
-			mw = mainWindow;
-		}
+            mw = mainWindow;
+        }
 
-		private int score = 0;
-		private string status = "";
+        private int score = 0;
+        private string status = "Tryk for at starte!";
 
-		public int Score
+        public int Score
         {
             get => score;
             set
@@ -62,48 +63,52 @@ namespace DemoTable
                 OnPropertyChanged("Score");
             }
         }
-		public string Status
-		{
-			get => status;
-			set
-			{
-				status = value;
-				OnPropertyChanged("Status");
-			}
-		}
+        public string Status
+        {
+            get => status;
+            set
+            {
+                status = value;
+                OnPropertyChanged("Status");
+            }
+        }
 
         private void Reset(object sender, EventArgs e) => Score = 0;
 
         private void ButtonScore_Click(object sender, RoutedEventArgs e)
-		{
-			if (mw.isGameStarted)
-				Score++;
-		}
+        {
+            if (mw.isGameStarted && isPlayerJoined)
+                Score++;
+        }
 
         private void ButtonJoin_Click(object sender, RoutedEventArgs e)
         {
-			if (!mw.isCountdownStarted && !mw.isGameStarted)
-			{
-				isPlayerJoined = true;
-				mw.GameStart();
-			}
-		}
+            if(!mw.isGameStarted)
+            {
+                isPlayerJoined = true;
+                Status = "Klar";
+                if(!mw.isCountdownStarted)
+                    mw.StartGame();
+            }
+        }
 
-		private void PointButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
-		{
-			if (mw.isGameStarted && e.State)
-				Score++;
-		}
+        private void PointButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
+        {
+            if (mw.isGameStarted && isPlayerJoined && e.State)
+                Score++;
+        }
 
-		private void JoinButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
-		{
-			if (!mw.isCountdownStarted && !mw.isGameStarted && e.State)
-			{
-				isPlayerJoined = true;
-				mw.GameStart();
-			}
-		}
+        private void JoinButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
+        {
+            if(e.State && !mw.isGameStarted)
+            {
+                isPlayerJoined = true;
+                Status = "Klar";
+                if(!mw.isCountdownStarted)
+                    mw.StartGame();
+            }
+        }
 
-		private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-	}
+        private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+    }
 }
