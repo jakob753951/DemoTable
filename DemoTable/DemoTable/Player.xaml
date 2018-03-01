@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:DemoTable"
       mc:Ignorable="d"
       d:DesignHeight="450"
       d:DesignWidth="350"
@@ -24,26 +23,26 @@
                VerticalContentAlignment="Bottom"
                Content="{Binding Score}"/>
 
-        <Button x:Name="ButtonScore"
+		<Label x:Name="LabelStatus"
+               Margin="5"
+               Grid.Row="1"
+               FontSize="40"
+               HorizontalContentAlignment="Center"
+               VerticalContentAlignment="Top"
+               Content="{Binding Status}"/>
+
+		<Button x:Name="ButtonScore"
                 Margin="5"
-                Grid.Row="1"
+                Grid.Row="2"
                 FontSize="40"
                 Content="+Score"
                 Click="ButtonScore_Click"/>
 
-        <Label x:Name="LabelTimer"
-               Margin="5"
-               Grid.Row="2"
-               FontSize="40"
-               HorizontalContentAlignment="Center"
-               VerticalContentAlignment="Bottom"
-               Content="{Binding Timer}"/>
-
-        <Button x:Name="ButtonJoin"
+		<Button x:Name="ButtonJoin"
                 Margin="5"
                 Grid.Row="3"
                 FontSize="40"
-                Content="Timer"
+                Content="Join"
                 Click="ButtonJoin_Click"/>
     </Grid>
 </Page>

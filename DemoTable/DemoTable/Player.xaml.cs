@@ -25,22 +25,35 @@ namespace DemoTable
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
         public bool isPlayerJoined = false;
-        public Player()
+
+		public DigitalInput PointButton = new DigitalInput();
+		public DigitalInput JoinButton = new DigitalInput();
+
+		private MainWindow mw;
+
+		public Player(MainWindow mainWindow, int pointChannel, int joinChannel)
 		{
 			InitializeComponent();
+
 			LabelScore.DataContext = this;
-		}
-		public Player(MainWindow mainwindow)
-		{
-			InitializeComponent();
-			LabelScore.DataContext = this;
-			mainwindow.GameEnd += Reset;
+
+			mainWindow.GameEnd += Reset;
+
+			PointButton.Channel = pointChannel;
+			PointButton.StateChange += PointButton_StateChange;
+			PointButton.Open();
+
+			JoinButton.Channel = joinChannel;
+			JoinButton.StateChange += JoinButton_StateChange;
+			JoinButton.Open();
+
+			mw = mainWindow;
 		}
 
-        private int score = 0;
-        private double timer = 0;
+		private int score = 0;
+		private string status = "";
 
-        public int Score
+		public int Score
         {
             get => score;
             set
@@ -49,23 +62,46 @@ namespace DemoTable
                 OnPropertyChanged("Score");
             }
         }
-        public double Timer
-        {
-            get => timer;
-            set
-            {
-                timer = value;
-                OnPropertyChanged("Timer");
-            }
-        }
+		public string Status
+		{
+			get => status;
+			set
+			{
+				status = value;
+				OnPropertyChanged("Status");
+			}
+		}
 
         private void Reset(object sender, EventArgs e) => Score = 0;
 
-        private void ButtonScore_Click(object sender, RoutedEventArgs e) => Score++;
+        private void ButtonScore_Click(object sender, RoutedEventArgs e)
+		{
+			if (mw.isGameStarted)
+				Score++;
+		}
 
         private void ButtonJoin_Click(object sender, RoutedEventArgs e)
         {
+			if (!mw.isCountdownStarted && !mw.isGameStarted)
+			{
+				isPlayerJoined = true;
+				mw.GameStart();
+			}
+		}
 
+		private void PointButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
+		{
+			if (mw.isGameStarted && e.State)
+				Score++;
+		}
+
+		private void JoinButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
+		{
+			if (!mw.isCountdownStarted && !mw.isGameStarted && e.State)
+			{
+				isPlayerJoined = true;
+				mw.GameStart();
+			}
 		}
 
 		private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
