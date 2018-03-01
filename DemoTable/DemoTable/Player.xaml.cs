@@ -24,7 +24,8 @@ namespace DemoTable
 	public partial class Player : Page, INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
-		public Player()
+        public bool isPlayerJoined = false;
+        public Player()
 		{
 			InitializeComponent();
 			LabelScore.DataContext = this;
@@ -35,23 +36,10 @@ namespace DemoTable
 			LabelScore.DataContext = this;
 			mainwindow.GameEnd += Reset;
 		}
-    /// <summary>
-    /// Interaction logic for Player.xaml
-    /// </summary>
-    public partial class Player : Page, INotifyPropertyChanged
-    {
-        MainWindow mw;
-        public event PropertyChangedEventHandler PropertyChanged;
-        public bool isPlayerJoined = false;
-
-        public Player(MainWindow mainwindow)
-        {
-            InitializeComponent();
-            LabelScore.DataContext = this;
-            mw = mainwindow;
-        }
 
         private int score = 0;
+        private double timer = 0;
+
         public int Score
         {
             get => score;
@@ -61,8 +49,6 @@ namespace DemoTable
                 OnPropertyChanged("Score");
             }
         }
-
-        private double timer = 0;
         public double Timer
         {
             get => timer;

@@ -26,6 +26,7 @@ namespace DemoTable
         private DispatcherTimer countDown = new DispatcherTimer();
 
         public delegate void GameEndEventHandler(object sender, EventArgs e);
+        public event GameEndEventHandler GameEnd;
         private List<Player> players = new List<Player>();
         public bool isCountdownStarted = false;
         public bool isGameStarted = false;
@@ -36,11 +37,13 @@ namespace DemoTable
         public double timer = 10;
         public MainWindow()
         {
-            for(int i = 0; i < 4; i++)
-                players.Add(new Player(this));
-            AddChild(players[0]);
             InitializeComponent();
-            countDown.Interval = new TimeSpan(0,0,0,1);
+            for(int i = 0; i < 4; i++)
+            {
+                players.Add(new Player(this));
+                (MainGrid.Children[i + 1] as Frame).Content = players[i];
+            }
+            countDown.Interval = new TimeSpan(0, 0, 0, 0, 1);
             countDown.Tick += CountDown_Tick;
         }
 
@@ -102,36 +105,10 @@ namespace DemoTable
                 {
                     isGameStarted = false;
                     countDown.Stop();
+                    GameEnd.Invoke(this, new EventArgs());
                     timer = 10;
                 }
             }
         }
     }
-}
-		public double timer = 10;
-		public MainWindow()
-		{
-			InitializeComponent();
-			for (int i = 0; i < 4; i++)
-			{
-				players.Add(new Player(this));
-				(MainGrid.Children[i+1] as Frame).Content = players[i];
-			}
-			countDown.Interval = new TimeSpan(0,0,0,0,1);
-			countDown.Tick += CountDown_Tick;
-		}
-		private void CountDown_Tick(object sender, EventArgs e)
-		{
-			if(timer > 0)
-			{
-				timer -= 0.001;
-			}
-			else
-			{
-				countDown.Stop();
-				GameEnd.Invoke(this, new EventArgs());
-				timer = 10;
-			}
-		}
-	}
 }
