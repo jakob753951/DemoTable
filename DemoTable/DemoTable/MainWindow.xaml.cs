@@ -31,24 +31,22 @@ namespace DemoTable
         private static int countdownTime = 5;
         private static int gameTime = 5;
 
-
         //Timer used for countdown before and during game
         private DispatcherTimer countDown = new DispatcherTimer();
-
-        //Called when game ends, so players know to reset their scores
-        public delegate void GameStartEventHandler(object sender, EventArgs e);
-        public event GameStartEventHandler GameStart;
 
         //The list of players
         private List<Player> players = new List<Player>();
 
         //If the countdown before the game is ticking
         public bool isCountdownStarted = false;
+
         //If the game has started
         public bool isGameStarted = false;
+
         //The time to display
         public double Timer = countdownTime;
-        //Status to display
+
+        //Status to display at the top
         private string status = "Klar";
         public string Status
         {
@@ -88,8 +86,8 @@ namespace DemoTable
             countDown.Start();
             //make sure timer know we're in the countdown, not the game
             isCountdownStarted = true;
-            //Reset Player scores
-            GameStart.Invoke(this, new EventArgs());
+			//Reset Player scores
+			players.ForEach(p => p.ResetScore());
         }
 
         private void CountDown_Tick(object sender, EventArgs e)

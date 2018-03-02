@@ -38,8 +38,6 @@ namespace DemoTable
             LabelScore.DataContext = this;
             LabelStatus.DataContext = this;
 
-            mainWindow.GameStart += Reset;
-
             PointButton.Channel = pointChannel;
             PointButton.StateChange += PointButton_StateChange;
             PointButton.Open();
@@ -73,7 +71,7 @@ namespace DemoTable
             }
         }
 
-        private void Reset(object sender, EventArgs e) => Score = 0;
+        public void ResetScore() => Score = 0;
 
         private void PointButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
         {
