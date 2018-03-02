@@ -65,11 +65,11 @@ namespace DemoTable
         private void GetBackground(int id)
         {
             if(File.Exists($@"{Environment.CurrentDirectory}\Resources\Background{id}.png"))
-                Background = new ImageBrush(new BitmapImage(new Uri($@"{Environment.CurrentDirectory}\ResourcesBackground{id}.png")));
-			else
-			{
-				Directory.CreateDirectory($@"{Environment.CurrentDirectory}\Resources");
-			}
+                Background = new ImageBrush(new BitmapImage(new Uri($@"{Environment.CurrentDirectory}\Resources\Background{id}.png")));
+            else
+            {
+                Directory.CreateDirectory($@"{Environment.CurrentDirectory}\Resources");
+            }
         }
 
         private bool isPlayerJoined = false;
@@ -82,7 +82,10 @@ namespace DemoTable
             get => isPlayerJoined;
             set
             {
-                LabelTimer.Visibility = value ? Visibility.Visible : Visibility.Hidden;
+                Dispatcher.Invoke(() =>
+                {
+                    LabelTimer.Visibility = value ? Visibility.Visible : Visibility.Hidden;
+                });
                 isPlayerJoined = value;
             }
         }
