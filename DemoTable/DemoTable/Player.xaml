@@ -6,17 +6,18 @@
       mc:Ignorable="d"
       d:DesignHeight="450"
       d:DesignWidth="350"
-      Title="Player">
+      Title="Player" Loaded="Page_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
 			<RowDefinition Height="1*"/>
 		</Grid.RowDefinitions>
 
-        <Label x:Name="LabelScore"
+        <Label x:Name="LabelTimer"
                Margin="5"
                Grid.Row="0"
-               FontSize="70"
+               FontSize="100"
+			   FontFamily="Rubrik"
                HorizontalContentAlignment="Center"
                VerticalContentAlignment="Bottom"
                Content="{Binding Score}"/>
@@ -25,6 +26,7 @@
                Margin="5"
                Grid.Row="1"
                FontSize="40"
+			   FontFamily="Rubrik"
                HorizontalContentAlignment="Center"
                VerticalContentAlignment="Top"
                Content="{Binding Status}"/>

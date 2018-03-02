@@ -46,30 +46,16 @@ namespace DemoTable
         //The time to display
         public double Timer = countdownTime;
 
-        //Status to display at the top
-        private string status = "Klar";
-        public string Status
-        {
-            get => status;
-            set
-            {
-                status = value;
-                OnPropertyChanged("Status");
-            }
-        }
-
         public MainWindow()
         {
             //Show stuff on the window
             InitializeComponent();
 
-            LabelStatus.DataContext = this;
-
             //Adds players to GUI, and to players
             for(int i = 0; i < 4; i++)
             {
                 players.Add(new Player(this, (i*2), (i*2)+1));
-                (MainGrid.Children[i + 1] as Frame).Content = players[i];
+                (MainGrid.Children[i] as Frame).Content = players[i];
             }
 
             //Set up timer
@@ -94,7 +80,6 @@ namespace DemoTable
         {
             //Tick the timer down
             Timer -= 1;
-            Status = Timer.ToString();
             //When timer is over
             if (Timer <= 0)
             {
@@ -111,7 +96,6 @@ namespace DemoTable
                     players.ForEach(p => p.isPlayerJoined = false);
                     //set timer to countdown
                     Timer = countdownTime;
-                    Status = "Klar";
                 }
 
                 //if the countdown is over
@@ -121,8 +105,6 @@ namespace DemoTable
                     isCountdownStarted = false;
                     //game starts
                     isGameStarted = true;
-                    //Marks players as in-game
-                    players.Where(p => p.isPlayerJoined).ToList().ForEach(p => p.Status = "TRYK! TRYK! TRYK!");
                     //setup game time
                     Timer = gameTime;
                 }

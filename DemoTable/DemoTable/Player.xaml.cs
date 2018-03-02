@@ -35,30 +35,36 @@ namespace DemoTable
         {
             InitializeComponent();
 
-            LabelScore.DataContext = this;
+            LabelTimer.DataContext = this;
             LabelStatus.DataContext = this;
 
             PointButton.Channel = pointChannel;
-            PointButton.StateChange += PointButton_StateChange;
-            PointButton.Open();
 
             JoinButton.Channel = joinChannel;
-            JoinButton.StateChange += JoinButton_StateChange;
-            JoinButton.Open();
 
             mw = mainWindow;
         }
 
-        private int score = 0;
+		private void Page_Loaded(object sender, RoutedEventArgs e)
+		{
+			PointButton.StateChange += PointButton_StateChange;
+			PointButton.Open();
+
+			JoinButton.StateChange += JoinButton_StateChange;
+			JoinButton.Open();
+		}
+
+		private int score = 0;
+		private string timer = "";
         private string status = "Tryk for at starte!";
 
-        public int Score
+        public string Timer
         {
-            get => score;
+            get => timer;
             set
             {
-                score = value;
-                OnPropertyChanged("Score");
+                timer = value;
+                OnPropertyChanged("Timer");
             }
         }
         public string Status
@@ -71,12 +77,12 @@ namespace DemoTable
             }
         }
 
-        public void ResetScore() => Score = 0;
+        public void ResetScore() => score = 0;
 
         private void PointButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
         {
             if (mw.isGameStarted && isPlayerJoined && e.State)
-                Score++;
+                score++;
         }
 
         private void JoinButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
@@ -92,5 +98,5 @@ namespace DemoTable
         }
 
         private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-    }
+	}
 }

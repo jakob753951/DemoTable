@@ -6,36 +6,18 @@
         xmlns:local="clr-namespace:DemoTable"
         mc:Ignorable="d"
         Title="MainWindow"
-        Height="600"
-        Width="1400">
-    <Grid x:Name="MainGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="2*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-        </Grid.ColumnDefinitions>
-        <Label x:Name="LabelStatus"
-               FontSize="100"
-               VerticalContentAlignment="Bottom"
-               HorizontalContentAlignment="Center"
-               Grid.ColumnSpan="4"
-               Content="{Binding Status}"/>
-        <Frame x:Name="zero"
-               Grid.Column="0"
-               Grid.Row="1"/>
-        <Frame x:Name="one"
-               Grid.Column="1"
-               Grid.Row="1"/>
-        <Frame x:Name="two"
-               Grid.Column="2"
-               Grid.Row="1"/>
-        <Frame x:Name="three"
-               Grid.Column="3"
-               Grid.Row="1"/>
+        Height="1200"
+        Width="3840">
+	<Grid x:Name="MainGrid">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="1*"/>
+		</Grid.ColumnDefinitions>
+		<Frame Grid.Column="0"/>
+        <Frame Grid.Column="1"/>
+        <Frame Grid.Column="2"/>
+        <Frame Grid.Column="3"/>
     </Grid>
 </Window>
