@@ -35,8 +35,7 @@ namespace DemoTable
         {
             InitializeComponent();
 
-            LabelScore.DataContext = this;
-            LabelStatus.DataContext = this;
+            DataContext = this;
 
             PointButton.Channel = pointChannel;
             PointButton.StateChange += PointButton_StateChange;
@@ -49,9 +48,19 @@ namespace DemoTable
             mw = mainWindow;
         }
 
+        private double timer = 0;
         private int score = 0;
         private string status = "Tryk for at starte!";
 
+        public double Timer
+        {
+            get => timer;
+            set
+            {
+                timer = value;
+                OnPropertyChanged("Timer");
+            }
+        }
         public int Score
         {
             get => score;
@@ -81,7 +90,7 @@ namespace DemoTable
 
         private void JoinButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
         {
-			//TODO: Do we not want people to join mid-game?
+            //TODO: Do we not want people to join mid-game?
             if(e.State && !mw.isGameStarted)
             {
                 isPlayerJoined = true;

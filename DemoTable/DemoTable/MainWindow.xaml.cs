@@ -43,9 +43,6 @@ namespace DemoTable
         //If the game has started
         public bool isGameStarted = false;
 
-        //The time to display
-        public double Timer = countdownTime;
-
         //Status to display at the top
         private string status = "Klar";
         public string Status
@@ -86,17 +83,16 @@ namespace DemoTable
             countDown.Start();
             //make sure timer know we're in the countdown, not the game
             isCountdownStarted = true;
-			//Reset Player scores
-			players.ForEach(p => p.ResetScore());
+            //Reset Player scores
+            players.ForEach(p => p.ResetScore());
         }
 
         private void CountDown_Tick(object sender, EventArgs e)
         {
             //Tick the timer down
-            Timer -= 1;
-            Status = Timer.ToString();
+            players.ForEach(p => p.Timer -= 1);
             //When timer is over
-            if (Timer <= 0)
+            if (players.Where(p => p.isPlayerJoined == true).ToList().FirstOrDefault().Timer <= 0)
             {
                 //if the game is over
                 if (isGameStarted)
@@ -110,7 +106,7 @@ namespace DemoTable
                     //Marks players as not in-game
                     players.ForEach(p => p.isPlayerJoined = false);
                     //set timer to countdown
-                    Timer = countdownTime;
+                    players.ForEach(p => p.Timer = countdownTime);
                     Status = "Klar";
                 }
 
@@ -124,7 +120,7 @@ namespace DemoTable
                     //Marks players as in-game
                     players.Where(p => p.isPlayerJoined).ToList().ForEach(p => p.Status = "TRYK! TRYK! TRYK!");
                     //setup game time
-                    Timer = gameTime;
+                    players.ForEach(p => p.Timer = gameTime);
                 }
             }
         }
