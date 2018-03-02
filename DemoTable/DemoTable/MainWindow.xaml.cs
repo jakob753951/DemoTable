@@ -84,8 +84,10 @@ namespace DemoTable
         {
             //Start the timer
             countDown.Start();
-            //make sure timer know we're in the countdown, not the game
+            //make sure timer knows we're in the countdown, not the game
             isCountdownStarted = true;
+
+            players.ForEach(p => p.Status = "Tryk for at starte!");
             //Reset Player scores
             players.ForEach(p => p.ResetScore());
         }

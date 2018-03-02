@@ -67,9 +67,7 @@ namespace DemoTable
             if(File.Exists($@"{Environment.CurrentDirectory}\Resources\Background{id}.png"))
                 Background = new ImageBrush(new BitmapImage(new Uri($@"{Environment.CurrentDirectory}\Resources\Background{id}.png")));
             else
-            {
                 Directory.CreateDirectory($@"{Environment.CurrentDirectory}\Resources");
-            }
         }
 
         private bool isPlayerJoined = false;
@@ -120,6 +118,13 @@ namespace DemoTable
             }
         }
 
+        public async void OutputFire()
+        {
+            Output.State = true;
+            await Task.Delay(MainWindow.outputDelay2);
+            Output.State = false;
+        }
+
         public void ResetScore() => score = 0;
 
         private async void PointButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
@@ -136,21 +141,15 @@ namespace DemoTable
             }
         }
 
-        public async void OutputFire()
-        {
-            Output.State = true;
-            await Task.Delay(MainWindow.outputDelay2);
-            Output.State = false;
-        }
-
         private void JoinButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
         {
-            if(e.State)
+            if(e.State && !IsPlayerJoined)
             {
-                IsPlayerJoined = true;
-                Status = "0";
                 if(!mw.isCountdownStarted && !mw.isGameStarted)
                     mw.StartGame();
+
+                IsPlayerJoined = true;
+                Status = "0";
             }
         }
 
