@@ -43,15 +43,22 @@ namespace DemoTable
         //If the game has started
         public bool isGameStarted = false;
 
-        //The time to display
-        public double Timer = countdownTime;
+		//The time to display
+		private int timer = countdownTime;
+        public int Timer
+		{
+			get => timer;
+			set
+			{
+				timer = value;
+				OnPropertyChanged("Timer");
+			}
+		}
 
         public MainWindow()
         {
             //Show stuff on the window
             InitializeComponent();
-
-            LabelStatus.DataContext = this;
 
             //Adds players to GUI, and to players
             for(int i = 0; i < 4; i++)
@@ -78,7 +85,7 @@ namespace DemoTable
             players.ForEach(p => p.ResetScore());
         }
 
-        private void CountDown_Tick(object sender, EventArgs e)
+        private async void CountDown_Tick(object sender, EventArgs e)
         {
             //Tick the timer down
             Timer -= 1;
@@ -92,14 +99,16 @@ namespace DemoTable
                     isGameStarted = false;
                     //Stop the timer
                     countDown.Stop();
-                    //Marks players as ready to join
-                    players.ForEach(p => p.Status = "Tryk for at starte!");
-                    //Marks players as not in-game
-                    players.ForEach(p => p.isPlayerJoined = false);
-                    //set timer to countdown
-                    Timer = countdownTime;
-                    Status = "Klar";
-                }
+					//Marks players as not in-game
+					players.ForEach(p => p.isPlayerJoined = false);
+
+					await Task.Delay(5000);
+
+					//Marks players as ready to join
+					players.ForEach(p => p.Status = "Tryk for at starte!");
+					//set timer to countdown
+					Timer = countdownTime;
+				}
 
                 //if the countdown is over
                 if (isCountdownStarted)

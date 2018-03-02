@@ -34,14 +34,14 @@ namespace DemoTable
         public Player(MainWindow mainWindow, int pointChannel, int joinChannel)
         {
             InitializeComponent();
+			mw = mainWindow;
 
-            DataContext = this;
+			DataContext = this;
+			LabelTimer.DataContext = mw;
 
             PointButton.Channel = pointChannel;
 
             JoinButton.Channel = joinChannel;
-
-            mw = mainWindow;
         }
 
 		private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -81,7 +81,10 @@ namespace DemoTable
         private void PointButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
         {
             if (mw.isGameStarted && isPlayerJoined && e.State)
-                score++;
+			{
+				score++;
+				Status = score.ToString();
+			}
         }
 
         private void JoinButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)

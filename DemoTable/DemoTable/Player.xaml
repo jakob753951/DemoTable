@@ -10,29 +10,22 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-        </Grid.RowDefinitions>
+			<RowDefinition Height="1*"/>
+		</Grid.RowDefinitions>
 
 
-        <Label x:Name="LabelTimer"
+		<Label x:Name="LabelTimer"
                Margin="5"
                Grid.Row="0"
-               FontSize="70"
+               FontSize="100"
+			   FontFamily="Rubrik"
                HorizontalContentAlignment="Center"
                VerticalContentAlignment="Bottom"
-               Content="{Binding TimerS}" />
-        <Label x:Name="LabelScore"
+               Content="{Binding Timer}" />
+
+		<Label x:Name="LabelStatus"
                Margin="5"
                Grid.Row="1"
-               FontSize="70"
-               HorizontalContentAlignment="Center"
-               VerticalContentAlignment="Bottom"
-               Content="{Binding Score}"/>
-
-        <Label x:Name="LabelStatus"
-               Margin="5"
-               Grid.Row="2"
                FontSize="40"
 			   FontFamily="Rubrik"
                HorizontalContentAlignment="Center"
