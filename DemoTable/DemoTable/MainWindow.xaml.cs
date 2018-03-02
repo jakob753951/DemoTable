@@ -27,12 +27,17 @@ namespace DemoTable
         //Needed for binding
         public event PropertyChangedEventHandler PropertyChanged;
 
-        //Main variables
-        private static int countdownTime = 10;
-        private static int gameTime = 50;
+        //How long the countdown before the game should last in seconds
+        public static int countdownTime = 10;
+		//How long the game should last in seconds
+        public static int gameTime = 50;
+		//Delay between button pressed and output fires in milliseconds
+		public static int outputDelay1 = 1000;
+		//Delay between output fires, until unfires in milliseconds
+		public static int outputDelay2 = 500;
 
-        //Timer used for countdown before and during game
-        private DispatcherTimer countDown = new DispatcherTimer();
+		//Timer used for countdown before and during game
+		private DispatcherTimer countDown = new DispatcherTimer();
 
         //The list of players
         private List<Player> players = new List<Player>();

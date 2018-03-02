@@ -104,7 +104,7 @@ namespace DemoTable
 					score++;
 					Status = score.ToString();
 				}
-				await Task.Delay(1000);
+				await Task.Delay(MainWindow.outputDelay1);
 				OutputFire();
 			}
         }
@@ -112,7 +112,7 @@ namespace DemoTable
 		public async void OutputFire()
 		{
 			Output.State = true;
-			await Task.Delay(500);
+			await Task.Delay(MainWindow.outputDelay2);
 			Output.State = false;
 		}
 
