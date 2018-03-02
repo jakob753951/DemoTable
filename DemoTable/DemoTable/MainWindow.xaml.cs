@@ -77,9 +77,6 @@ namespace DemoTable
             //Set up timer
             countDown.Interval = new TimeSpan(0, 0, 1);
             countDown.Tick += CountDown_Tick;
-
-            //TODO: test if neccesary
-            Phidget.InvokeEventCallbacks = true;
         }
 
         /// <summary>
