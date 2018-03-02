@@ -34,27 +34,27 @@ namespace DemoTable
         public Player(MainWindow mainWindow, int pointChannel, int joinChannel)
         {
             InitializeComponent();
-			mw = mainWindow;
+            mw = mainWindow;
 
-			DataContext = this;
-			LabelTimer.DataContext = mw;
+            DataContext = this;
+            LabelTimer.DataContext = mw;
 
             PointButton.Channel = pointChannel;
 
             JoinButton.Channel = joinChannel;
         }
 
-		private void Page_Loaded(object sender, RoutedEventArgs e)
-		{
-			PointButton.StateChange += PointButton_StateChange;
-			PointButton.Open();
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            PointButton.StateChange += PointButton_StateChange;
+            PointButton.Open();
 
-			JoinButton.StateChange += JoinButton_StateChange;
-			JoinButton.Open();
-		}
+            JoinButton.StateChange += JoinButton_StateChange;
+            JoinButton.Open();
+        }
 
-		private int score = 0;
-		private string timer = "";
+        private int score = 0;
+        private string timer = "";
         private string status = "Tryk for at starte!";
 
         public string Timer
@@ -68,7 +68,19 @@ namespace DemoTable
         }
         public string Status
         {
-            get => status;
+            get
+            {
+                if(int.TryParse(status, out int statusScore))
+                {
+                    LabelStatus.FontSize = 100;
+                    return status;
+                }
+                else
+                {
+                    LabelStatus.FontSize = 70;
+                    return status;
+                }
+            }
             set
             {
                 status = value;
@@ -81,10 +93,10 @@ namespace DemoTable
         private void PointButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
         {
             if (mw.isGameStarted && isPlayerJoined && e.State)
-			{
-				score++;
-				Status = score.ToString();
-			}
+            {
+                score++;
+                Status = score.ToString();
+            }
         }
 
         private void JoinButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
@@ -100,5 +112,5 @@ namespace DemoTable
         }
 
         private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-	}
+    }
 }
