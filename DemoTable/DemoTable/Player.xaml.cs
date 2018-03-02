@@ -28,10 +28,11 @@ namespace DemoTable
 
         public DigitalInput PointButton = new DigitalInput();
         public DigitalInput JoinButton = new DigitalInput();
+		public DigitalOutput Output = new DigitalOutput();
 
-        private MainWindow mw;
+		private MainWindow mw;
 
-        public Player(MainWindow mainWindow, int pointChannel, int joinChannel)
+        public Player(MainWindow mainWindow, int pointChannel, int joinChannel, int outputChannel)
         {
             InitializeComponent();
             mw = mainWindow;
@@ -42,6 +43,8 @@ namespace DemoTable
             PointButton.Channel = pointChannel;
 
             JoinButton.Channel = joinChannel;
+
+			Output.Channel = outputChannel;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -49,9 +52,11 @@ namespace DemoTable
             PointButton.StateChange += PointButton_StateChange;
             PointButton.Open();
 
-            JoinButton.StateChange += JoinButton_StateChange;
-            JoinButton.Open();
-        }
+			JoinButton.StateChange += JoinButton_StateChange;
+			JoinButton.Open();
+
+			Output.Open();
+		}
 
         private int score = 0;
         private string timer = "";
@@ -90,14 +95,26 @@ namespace DemoTable
 
         public void ResetScore() => score = 0;
 
-        private void PointButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
+        private async void PointButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
         {
-            if (mw.isGameStarted && isPlayerJoined && e.State)
-            {
-                score++;
-                Status = score.ToString();
-            }
+			if (e.State)
+			{
+				if (mw.isGameStarted && isPlayerJoined)
+				{
+					score++;
+					Status = score.ToString();
+				}
+				await Task.Delay(1000);
+				OutputFire();
+			}
         }
+
+		public async void OutputFire()
+		{
+			Output.State = true;
+			await Task.Delay(500);
+			Output.State = false;
+		}
 
         private void JoinButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
         {

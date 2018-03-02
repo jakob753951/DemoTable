@@ -28,8 +28,8 @@ namespace DemoTable
         public event PropertyChangedEventHandler PropertyChanged;
 
         //Main variables
-        private static int countdownTime = 5;
-        private static int gameTime = 5;
+        private static int countdownTime = 10;
+        private static int gameTime = 50;
 
         //Timer used for countdown before and during game
         private DispatcherTimer countDown = new DispatcherTimer();
@@ -63,7 +63,7 @@ namespace DemoTable
             //Adds players to GUI, and to players
             for(int i = 0; i < 4; i++)
             {
-                players.Add(new Player(this, (i*2), (i*2)+1));
+                players.Add(new Player(this, (i*2), (i*2)+1, i));
                 (MainGrid.Children[i] as Frame).Content = players[i];
             }
 
@@ -85,7 +85,7 @@ namespace DemoTable
             players.ForEach(p => p.ResetScore());
         }
 
-        private async void CountDown_Tick(object sender, EventArgs e)
+        private void CountDown_Tick(object sender, EventArgs e)
         {
             //Tick the timer down
             Timer -= 1;
@@ -94,18 +94,13 @@ namespace DemoTable
             {
                 //if the game is over
                 if (isGameStarted)
-                {
-                    //game is no longer running
-                    isGameStarted = false;
+				{
+					//game is no longer running
+					isGameStarted = false;
                     //Stop the timer
                     countDown.Stop();
 					//Marks players as not in-game
 					players.ForEach(p => p.isPlayerJoined = false);
-
-					await Task.Delay(5000);
-
-					//Marks players as ready to join
-					players.ForEach(p => p.Status = "Tryk for at starte!");
 					//set timer to countdown
 					Timer = countdownTime;
 				}
@@ -117,6 +112,7 @@ namespace DemoTable
                     isCountdownStarted = false;
                     //game starts
                     isGameStarted = true;
+					players.Where(p => p.isPlayerJoined).ToList().ForEach(p => p.Status = "0");
                     //setup game time
                     Timer = gameTime;
                 }
