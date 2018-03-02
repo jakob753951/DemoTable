@@ -64,8 +64,12 @@ namespace DemoTable
 
         private void GetBackground(int id)
         {
-            if(File.Exists($@"pack://application:,,,/DemoTable;component/Resources/Background{id}.png"))
-                Background = new ImageBrush(new BitmapImage(new Uri($@"pack://application:,,,/DemoTable;component/Resources/Background{id}.png")));
+            if(File.Exists($@"{Environment.CurrentDirectory}\Resources\Background{id}.png"))
+                Background = new ImageBrush(new BitmapImage(new Uri($@"{Environment.CurrentDirectory}\ResourcesBackground{id}.png")));
+			else
+			{
+				Directory.CreateDirectory($@"{Environment.CurrentDirectory}\Resources");
+			}
         }
 
         private bool isPlayerJoined = false;
