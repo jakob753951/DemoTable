@@ -6,8 +6,10 @@
         xmlns:local="clr-namespace:DemoTable"
         mc:Ignorable="d"
         Title="MainWindow"
-        Height="1200"
-        Width="3840">
+        Height="1080"
+        Width="3840"
+		WindowStyle="None"
+		WindowState="Maximized">
 	<Grid x:Name="MainGrid">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="1*"/>

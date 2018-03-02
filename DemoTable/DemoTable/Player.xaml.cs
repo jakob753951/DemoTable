@@ -96,7 +96,7 @@ namespace DemoTable
                 }
                 else
                 {
-                    LabelStatus.FontSize = 70;
+                    LabelStatus.FontSize = 50;
                     return status;
                 }
             }
@@ -132,12 +132,11 @@ namespace DemoTable
 
         private void JoinButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
         {
-            //TODO: Do we not want people to join mid-game?
-            if(e.State && !mw.isGameStarted)
+            if(e.State)
             {
                 isPlayerJoined = true;
-                Status = "Klar";
-                if(!mw.isCountdownStarted)
+                Status = "0";
+                if(!mw.isCountdownStarted && !mw.isGameStarted)
                     mw.StartGame();
             }
         }
