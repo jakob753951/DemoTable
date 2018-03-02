@@ -29,15 +29,15 @@ namespace DemoTable
 
         //How long the countdown before the game should last in seconds
         public static int countdownTime = 10;
-		//How long the game should last in seconds
+        //How long the game should last in seconds
         public static int gameTime = 50;
-		//Delay between button pressed and output fires in milliseconds
-		public static int outputDelay1 = 1000;
-		//Delay between output fires, until unfires in milliseconds
-		public static int outputDelay2 = 500;
+        //Delay between button pressed and output fires in milliseconds
+        public static int outputDelay1 = 1000;
+        //Delay between output fires, until unfires in milliseconds
+        public static int outputDelay2 = 500;
 
-		//Timer used for countdown before and during game
-		private DispatcherTimer countDown = new DispatcherTimer();
+        //Timer used for countdown before and during game
+        private DispatcherTimer countDown = new DispatcherTimer();
 
         //The list of players
         private List<Player> players = new List<Player>();
@@ -48,17 +48,17 @@ namespace DemoTable
         //If the game has started
         public bool isGameStarted = false;
 
-		//The time to display
-		private int timer = countdownTime;
+        //The time to display
+        private int timer = countdownTime;
         public int Timer
-		{
-			get => timer;
-			set
-			{
-				timer = value;
-				OnPropertyChanged("Timer");
-			}
-		}
+        {
+            get => timer;
+            set
+            {
+                timer = value;
+                OnPropertyChanged("Timer");
+            }
+        }
 
         public MainWindow()
         {
@@ -99,16 +99,16 @@ namespace DemoTable
             {
                 //if the game is over
                 if (isGameStarted)
-				{
-					//game is no longer running
-					isGameStarted = false;
+                {
+                    //game is no longer running
+                    isGameStarted = false;
                     //Stop the timer
                     countDown.Stop();
-					//Marks players as not in-game
-					players.ForEach(p => p.isPlayerJoined = false);
-					//set timer to countdown
-					Timer = countdownTime;
-				}
+                    //Marks players as not in-game
+                    players.ForEach(p => p.IsPlayerJoined = false);
+                    //set timer to countdown
+                    Timer = countdownTime;
+                }
 
                 //if the countdown is over
                 if (isCountdownStarted)
@@ -117,7 +117,7 @@ namespace DemoTable
                     isCountdownStarted = false;
                     //game starts
                     isGameStarted = true;
-					players.Where(p => p.isPlayerJoined).ToList().ForEach(p => p.Status = "0");
+                    players.Where(p => p.IsPlayerJoined).ToList().ForEach(p => p.Status = "0");
                     //setup game time
                     Timer = gameTime;
                 }

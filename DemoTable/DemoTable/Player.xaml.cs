@@ -25,7 +25,6 @@ namespace DemoTable
     public partial class Player : Page, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public bool isPlayerJoined = false;
 
         public DigitalInput PointButton = new DigitalInput();
         public DigitalInput JoinButton = new DigitalInput();
@@ -48,6 +47,8 @@ namespace DemoTable
             Output.Channel = outputChannel;
 
             GetBackground(outputChannel);
+
+            LabelTimer.Visibility = Visibility.Hidden;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -63,19 +64,24 @@ namespace DemoTable
 
         private void GetBackground(int id)
         {
-            try
-            {
+            if(File.Exists($@"pack://application:,,,/DemoTable;component/Resources/Background{id}.png"))
                 Background = new ImageBrush(new BitmapImage(new Uri($@"pack://application:,,,/DemoTable;component/Resources/Background{id}.png")));
-            }
-            catch(IOException)
-            {
-            }
         }
 
+        private bool isPlayerJoined = false;
         private int score = 0;
         private string timer = "";
         private string status = "Tryk for at starte!";
 
+        public bool IsPlayerJoined
+        {
+            get => isPlayerJoined;
+            set
+            {
+                LabelTimer.Visibility = value ? Visibility.Visible : Visibility.Hidden;
+                isPlayerJoined = value;
+            }
+        }
         public string Timer
         {
             get => timer;
@@ -111,30 +117,30 @@ namespace DemoTable
 
         private async void PointButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
         {
-			if (e.State)
-			{
-				if (mw.isGameStarted && isPlayerJoined)
-				{
-					score++;
-					Status = score.ToString();
-				}
-				await Task.Delay(MainWindow.outputDelay1);
-				OutputFire();
-			}
+            if (e.State)
+            {
+                if (mw.isGameStarted && IsPlayerJoined)
+                {
+                    score++;
+                    Status = score.ToString();
+                }
+                await Task.Delay(MainWindow.outputDelay1);
+                OutputFire();
+            }
         }
 
-		public async void OutputFire()
-		{
-			Output.State = true;
-			await Task.Delay(MainWindow.outputDelay2);
-			Output.State = false;
-		}
+        public async void OutputFire()
+        {
+            Output.State = true;
+            await Task.Delay(MainWindow.outputDelay2);
+            Output.State = false;
+        }
 
         private void JoinButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
         {
             if(e.State)
             {
-                isPlayerJoined = true;
+                IsPlayerJoined = true;
                 Status = "0";
                 if(!mw.isCountdownStarted && !mw.isGameStarted)
                     mw.StartGame();
