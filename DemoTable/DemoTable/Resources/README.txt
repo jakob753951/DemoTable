@@ -1,0 +1,1 @@
+To add a background image, name the file "Backgroundx.png" with x being the id of the player (0-4).

@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
 using Phidget22.Events;
+using System.IO;
 
 namespace DemoTable
 {
@@ -28,9 +29,9 @@ namespace DemoTable
 
         public DigitalInput PointButton = new DigitalInput();
         public DigitalInput JoinButton = new DigitalInput();
-		public DigitalOutput Output = new DigitalOutput();
+        public DigitalOutput Output = new DigitalOutput();
 
-		private MainWindow mw;
+        private MainWindow mw;
 
         public Player(MainWindow mainWindow, int pointChannel, int joinChannel, int outputChannel)
         {
@@ -44,7 +45,9 @@ namespace DemoTable
 
             JoinButton.Channel = joinChannel;
 
-			Output.Channel = outputChannel;
+            Output.Channel = outputChannel;
+
+            GetBackground(outputChannel);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -52,11 +55,22 @@ namespace DemoTable
             PointButton.StateChange += PointButton_StateChange;
             PointButton.Open();
 
-			JoinButton.StateChange += JoinButton_StateChange;
-			JoinButton.Open();
+            JoinButton.StateChange += JoinButton_StateChange;
+            JoinButton.Open();
 
-			Output.Open();
-		}
+            Output.Open();
+        }
+
+        private void GetBackground(int id)
+        {
+            try
+            {
+                Background = new ImageBrush(new BitmapImage(new Uri($@"pack://application:,,,/DemoTable;component/Resources/Background{id}.png")));
+            }
+            catch(IOException)
+            {
+            }
+        }
 
         private int score = 0;
         private string timer = "";
@@ -97,24 +111,24 @@ namespace DemoTable
 
         private async void PointButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
         {
-			if (e.State)
-			{
-				if (mw.isGameStarted && isPlayerJoined)
-				{
-					score++;
-					Status = score.ToString();
-				}
-				await Task.Delay(1000);
-				OutputFire();
-			}
+            if (e.State)
+            {
+                if (mw.isGameStarted && isPlayerJoined)
+                {
+                    score++;
+                    Status = score.ToString();
+                }
+                await Task.Delay(1000);
+                OutputFire();
+            }
         }
 
-		public async void OutputFire()
-		{
-			Output.State = true;
-			await Task.Delay(500);
-			Output.State = false;
-		}
+        public async void OutputFire()
+        {
+            Output.State = true;
+            await Task.Delay(500);
+            Output.State = false;
+        }
 
         private void JoinButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
         {
