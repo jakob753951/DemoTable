@@ -51,6 +51,8 @@ namespace DemoTable
             //Show stuff on the window
             InitializeComponent();
 
+            LabelStatus.DataContext = this;
+
             //Adds players to GUI, and to players
             for(int i = 0; i < 4; i++)
             {
@@ -72,8 +74,8 @@ namespace DemoTable
             countDown.Start();
             //make sure timer know we're in the countdown, not the game
             isCountdownStarted = true;
-			//Reset Player scores
-			players.ForEach(p => p.ResetScore());
+            //Reset Player scores
+            players.ForEach(p => p.ResetScore());
         }
 
         private void CountDown_Tick(object sender, EventArgs e)
@@ -96,6 +98,7 @@ namespace DemoTable
                     players.ForEach(p => p.isPlayerJoined = false);
                     //set timer to countdown
                     Timer = countdownTime;
+                    Status = "Klar";
                 }
 
                 //if the countdown is over

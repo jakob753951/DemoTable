@@ -35,8 +35,7 @@ namespace DemoTable
         {
             InitializeComponent();
 
-            LabelTimer.DataContext = this;
-            LabelStatus.DataContext = this;
+            DataContext = this;
 
             PointButton.Channel = pointChannel;
 
@@ -87,7 +86,7 @@ namespace DemoTable
 
         private void JoinButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
         {
-			//TODO: Do we not want people to join mid-game?
+            //TODO: Do we not want people to join mid-game?
             if(e.State && !mw.isGameStarted)
             {
                 isPlayerJoined = true;
