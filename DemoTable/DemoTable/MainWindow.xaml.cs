@@ -31,9 +31,9 @@ namespace DemoTable
         public static int countdownTime = 10;
         //How long the game should last in seconds
         public static int gameTime = 50;
-        //Delay between button pressed and output fires in milliseconds
+        //Time from hit until fire in milliseconds
         public static int outputDelay1 = 1000;
-        //Delay between output fires, until unfires in milliseconds
+        //Time from fire until reset in milliseconds
         public static int outputDelay2 = 500;
 
         //Timer used for countdown before and during game
@@ -84,9 +84,9 @@ namespace DemoTable
         {
             //Start the timer
             countDown.Start();
-            //make sure timer knows we're in the countdown, not the game
+            //Make sure timer knows we're in the countdown, not the game
             isCountdownStarted = true;
-
+			//Reset status
             players.ForEach(p => p.Status = "Tryk for at starte!");
             //Reset Player scores
             players.ForEach(p => p.ResetScore());

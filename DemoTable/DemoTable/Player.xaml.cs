@@ -26,64 +26,75 @@ namespace DemoTable
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+		//The physical IO-Buttons
         public DigitalInput PointButton = new DigitalInput();
         public DigitalInput JoinButton = new DigitalInput();
         public DigitalOutput Output = new DigitalOutput();
-
-        private MainWindow mw;
+		
+		//Whether or not the player is in the game
+		private bool isPlayerJoined = false;
+		//The player's score
+		private int score = 0;
+		//What is shown on the players timerLabel
+		private string timer = "";
+		//The Player's current status, can contain the score
+		private string status = "Tryk for at starte!";
+		//Reference to MainWindow, Given in Constructor
+		private MainWindow mw;
 
         public Player(MainWindow mainWindow, int pointChannel, int joinChannel, int outputChannel)
         {
+			//Render
             InitializeComponent();
+
+			//Create reference
             mw = mainWindow;
 
+			//Setup bindings
             DataContext = this;
             LabelTimer.DataContext = mw;
 
+			//Set button channels
             PointButton.Channel = pointChannel;
-
             JoinButton.Channel = joinChannel;
-
             Output.Channel = outputChannel;
 
+			//Set background image
             GetBackground(outputChannel);
 
+			//Hide Timer
             LabelTimer.Visibility = Visibility.Hidden;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+			//Bind Buttons
             PointButton.StateChange += PointButton_StateChange;
-            PointButton.Open();
+			JoinButton.StateChange += JoinButton_StateChange;
 
-            JoinButton.StateChange += JoinButton_StateChange;
+			//Open ports
+			PointButton.Open();
             JoinButton.Open();
-
             Output.Open();
         }
 
         private void GetBackground(int id)
         {
+			//Get the background image from [.exe folder]/Resources/Background[1-4].png
+			//If it does not exist, just create the resources directory
             if(File.Exists($@"{Environment.CurrentDirectory}\Resources\Background{id}.png"))
                 Background = new ImageBrush(new BitmapImage(new Uri($@"{Environment.CurrentDirectory}\Resources\Background{id}.png")));
             else
                 Directory.CreateDirectory($@"{Environment.CurrentDirectory}\Resources");
         }
 
-        private bool isPlayerJoined = false;
-        private int score = 0;
-        private string timer = "";
-        private string status = "Tryk for at starte!";
-
         public bool IsPlayerJoined
         {
             get => isPlayerJoined;
             set
             {
-                Dispatcher.Invoke(() =>
-                {
-                    LabelTimer.Visibility = value ? Visibility.Visible : Visibility.Hidden;
-                });
+				//Make sure to change the Timer visibility when Joining/Leaving
+                Dispatcher.Invoke(() => { LabelTimer.Visibility = value ? Visibility.Visible : Visibility.Hidden; });
                 isPlayerJoined = value;
             }
         }
@@ -100,17 +111,10 @@ namespace DemoTable
         {
             get
             {
-                if(int.TryParse(status, out int statusScore))
-                {
-                    LabelStatus.FontSize = 100;
-                    return status;
-                }
-                else
-                {
-                    LabelStatus.FontSize = 50;
-                    return status;
-                }
-            }
+				//If getting a number, change FontSize to 100, else to 50
+				LabelStatus.FontSize = int.TryParse(status, out int statusScore) ? 100 : 50;
+				return status;
+			}
             set
             {
                 status = value;
