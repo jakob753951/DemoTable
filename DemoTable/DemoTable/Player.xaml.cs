@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using System.ComponentModel;
 using Phidget22.Events;
 using System.IO;
@@ -30,7 +31,11 @@ namespace DemoTable
         public DigitalInput PointButton = new DigitalInput();
         public DigitalInput JoinButton = new DigitalInput();
         public DigitalOutput Output = new DigitalOutput();
-		
+		private DispatcherTimer holdTimer = new DispatcherTimer();
+
+		private bool buttonIsHeld = false;
+		private int timePassed = 0;
+
 		//Whether or not the player is in the game
 		private bool isPlayerJoined = false;
 		//The player's score
@@ -64,7 +69,9 @@ namespace DemoTable
 
 			//Hide Timer
             LabelTimer.Visibility = Visibility.Hidden;
-        }
+			holdTimer.Interval = new TimeSpan(0, 0, 1);
+			holdTimer.Tick += HoldTimer_tick;
+		}
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -122,6 +129,10 @@ namespace DemoTable
             }
         }
 
+		/// <summary>
+		/// Fires the output
+		/// Uses the outputDelay2 set in mainwindow
+		/// </summary>
         public async void OutputFire()
         {
             Output.State = true;
@@ -136,26 +147,43 @@ namespace DemoTable
             if (e.State)
             {
                 if (mw.isGameStarted && IsPlayerJoined)
-                {
-                    score++;
-                    Status = score.ToString();
-                }
-                await Task.Delay(MainWindow.outputDelay1);
+                    Status = score++.ToString();
+
+				await Task.Delay(MainWindow.outputDelay1);
                 OutputFire();
             }
         }
 
         private void JoinButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
         {
+			buttonIsHeld = e.State;
             if(e.State && !IsPlayerJoined)
             {
-                if(!mw.isCountdownStarted && !mw.isGameStarted)
-                    mw.StartGame();
+				if (!mw.isCountdownStarted && !mw.isGameStarted)
+					mw.StartGame();
 
-                IsPlayerJoined = true;
-                Status = "0";
+				IsPlayerJoined = true;
+				Status = "0";
             }
         }
+
+		private void HoldTimer_tick(object sender, EventArgs e)
+		{
+
+			if(buttonIsHeld)
+			{
+				if(timePassed == 10)
+				{
+					OutputFire();
+					OutputFire();
+					OutputFire();
+				}
+				else
+					timePassed++;
+			}
+			else
+				timePassed = 0;
+		}
 
         private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
     }
