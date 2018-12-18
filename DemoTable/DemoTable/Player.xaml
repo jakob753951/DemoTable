@@ -11,8 +11,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
+            <!--
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
+            -->
         </Grid.RowDefinitions>
 
         <Label x:Name="LabelScore"
@@ -31,7 +33,7 @@
                VerticalContentAlignment="Top"
                Content="{Binding Status}"/>
 
-        <Button x:Name="ButtonScore"
+        <!--<Button x:Name="ButtonScore"
                 Margin="5"
                 Grid.Row="2"
                 FontSize="40"
@@ -43,6 +45,6 @@
                 Grid.Row="3"
                 FontSize="40"
                 Content="Join"
-                Click="ButtonJoin_Click"/>
+                Click="ButtonJoin_Click"/>-->
     </Grid>
 </Page>
