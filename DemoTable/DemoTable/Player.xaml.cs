@@ -27,19 +27,6 @@ namespace DemoTable
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-<<<<<<< HEAD
-
-        public bool isPlayerJoined = false;
-        
-        // The Phidget buttons to score, and join a game, respectively
-        public DigitalInput PointButton = new DigitalInput();
-        public DigitalInput JoinButton = new DigitalInput();
-
-        //the reference to mainwindow
-        private MainWindow mw;
-
-        public Player(MainWindow mainWindow, int pointChannel, int joinChannel)
-=======
 		//The physical IO-Buttons
         public DigitalInput PointButton = new DigitalInput();
         public DigitalInput JoinButton = new DigitalInput();
@@ -61,21 +48,9 @@ namespace DemoTable
 		private MainWindow mw;
 
         public Player(MainWindow mainWindow, int pointChannel, int joinChannel, int outputChannel)
->>>>>>> Dev
         {
 			//Render
             InitializeComponent();
-<<<<<<< HEAD
-            
-            //Needed for Databinding
-            LabelScore.DataContext = this;
-            LabelStatus.DataContext = this;
-
-            //Reset when the game starts
-            mainWindow.GameStart += Reset;
-
-            //Setup and open PointButton
-=======
 
 			//Create reference
             mw = mainWindow;
@@ -85,7 +60,6 @@ namespace DemoTable
             LabelTimer.DataContext = mw;
 
 			//Set button channels
->>>>>>> Dev
             PointButton.Channel = pointChannel;
             JoinButton.Channel = joinChannel;
             Output.Channel = outputChannel;
@@ -105,25 +79,6 @@ namespace DemoTable
             PointButton.StateChange += PointButton_StateChange;
 			JoinButton.StateChange += JoinButton_StateChange;
 
-<<<<<<< HEAD
-            //Setup and open JoinButton
-            JoinButton.Channel = joinChannel;
-            JoinButton.StateChange += JoinButton_StateChange;
-            JoinButton.Open();
-
-            //Set reference to mainwindow
-            mw = mainWindow;
-        }
-
-        //Set default values
-        private int score = 0;
-        private string status = "Tryk for at starte!";
-
-        /// <summary>
-        /// The player's current score
-        /// </summary>
-        public int Score
-=======
 			//Open ports
 			PointButton.Open();
             JoinButton.Open();
@@ -141,7 +96,6 @@ namespace DemoTable
         }
 
         public bool IsPlayerJoined
->>>>>>> Dev
         {
             get => isPlayerJoined;
             set
@@ -179,62 +133,29 @@ namespace DemoTable
             }
         }
 
-<<<<<<< HEAD
-        private void Reset(object sender, EventArgs e) => Score = 0;
-
-        /*
-         * Only needed for debugging
-        private void ButtonScore_Click(object sender, RoutedEventArgs e)
-=======
 		/// <summary>
 		/// Fires the output
 		/// Uses the outputDelay2 set in mainwindow
 		/// </summary>
         public async void OutputFire()
->>>>>>> Dev
         {
             Output.State = true;
             await Task.Delay(MainWindow.outputDelay2);
             Output.State = false;
         }
-<<<<<<< HEAD
-        private void ButtonJoin_Click(object sender, RoutedEventArgs e)
-=======
 
         public void ResetScore() => score = 0;
 
         private async void PointButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
->>>>>>> Dev
         {
             if (e.State)
             {
-<<<<<<< HEAD
-                isPlayerJoined = true;
-                Status = "Klar";
-                if(!mw.isCountdownStarted)
-                    mw.StartGame();
-            }
-        }
-        */
-
-
-        /// <summary>
-        /// Executed when the PointButton is pressed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void PointButton_StateChange(object sender, DigitalInputStateChangeEventArgs e)
-        {
-            if (mw.isGameStarted && isPlayerJoined && e.State)
-                Score++;
-=======
                 if (mw.isGameStarted && IsPlayerJoined)
                     Status = score++.ToString();
 
 				await Task.Delay(MainWindow.outputDelay1);
                 OutputFire();
             }
->>>>>>> Dev
         }
 
         /// <summary>

@@ -10,20 +10,10 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
-<<<<<<< HEAD
             <RowDefinition Height="1*"/>
-            <!--
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            -->
         </Grid.RowDefinitions>
-=======
-			<RowDefinition Height="1*"/>
-		</Grid.RowDefinitions>
->>>>>>> Dev
 
-
-		<Label x:Name="LabelTimer"
+        <Label x:Name="LabelTimer"
                Margin="5"
                Grid.Row="0"
                FontSize="80"
@@ -32,7 +22,7 @@
                VerticalContentAlignment="Bottom"
                Content="{Binding Timer}" />
 
-		<Label x:Name="LabelStatus"
+        <Label x:Name="LabelStatus"
                Margin="5"
                Grid.Row="1"
                FontSize="50"
@@ -40,22 +30,5 @@
                HorizontalContentAlignment="Center"
                VerticalContentAlignment="Top"
                Content="{Binding Status}"/>
-<<<<<<< HEAD
-
-        <!--<Button x:Name="ButtonScore"
-                Margin="5"
-                Grid.Row="2"
-                FontSize="40"
-                Content="+Score"
-                Click="ButtonScore_Click"/>
-
-        <Button x:Name="ButtonJoin"
-                Margin="5"
-                Grid.Row="3"
-                FontSize="40"
-                Content="Join"
-                Click="ButtonJoin_Click"/>-->
-=======
->>>>>>> Dev
     </Grid>
 </Page>
