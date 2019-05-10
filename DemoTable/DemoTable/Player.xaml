@@ -6,32 +6,41 @@
       mc:Ignorable="d"
       d:DesignHeight="450"
       d:DesignWidth="350"
-      Title="Player">
+      Title="Player" Loaded="Page_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
+<<<<<<< HEAD
             <RowDefinition Height="1*"/>
             <!--
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             -->
         </Grid.RowDefinitions>
+=======
+			<RowDefinition Height="1*"/>
+		</Grid.RowDefinitions>
+>>>>>>> Dev
 
-        <Label x:Name="LabelScore"
+
+		<Label x:Name="LabelTimer"
                Margin="5"
                Grid.Row="0"
-               FontSize="40"
+               FontSize="80"
+			   FontFamily="Rubrik"
                HorizontalContentAlignment="Center"
                VerticalContentAlignment="Bottom"
-               Content="{Binding Score}"/>
+               Content="{Binding Timer}" />
 
-        <Label x:Name="LabelStatus"
+		<Label x:Name="LabelStatus"
                Margin="5"
                Grid.Row="1"
-               FontSize="40"
+               FontSize="50"
+			   FontFamily="Rubrik"
                HorizontalContentAlignment="Center"
                VerticalContentAlignment="Top"
                Content="{Binding Status}"/>
+<<<<<<< HEAD
 
         <!--<Button x:Name="ButtonScore"
                 Margin="5"
@@ -46,5 +55,7 @@
                 FontSize="40"
                 Content="Join"
                 Click="ButtonJoin_Click"/>-->
+=======
+>>>>>>> Dev
     </Grid>
 </Page>

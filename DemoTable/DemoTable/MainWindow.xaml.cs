@@ -27,36 +27,36 @@ namespace DemoTable
         //Needed for binding
         public event PropertyChangedEventHandler PropertyChanged;
 
-        //Main variables
-        private static int countdownTime = 5;
-        private static int gameTime = 5;
-
+        //How long the countdown before the game should last in seconds
+        public static int countdownTime = 10;
+        //How long the game should last in seconds
+        public static int gameTime = 50;
+        //Time from hit until fire in milliseconds
+        public static int outputDelay1 = 1000;
+        //Time from fire until reset in milliseconds
+        public static int outputDelay2 = 500;
 
         //Timer used for countdown before and during game
         private DispatcherTimer countDown = new DispatcherTimer();
-
-        //Called when game ends, so players know to reset their scores
-        public delegate void GameStartEventHandler(object sender, EventArgs e);
-        public event GameStartEventHandler GameStart;
 
         //The list of players
         private List<Player> players = new List<Player>();
 
         //If the countdown before the game is ticking
         public bool isCountdownStarted = false;
+
         //If the game has started
         public bool isGameStarted = false;
+
         //The time to display
-        public double Timer = countdownTime;
-        //Status to display
-        private string status = "Klar";
-        public string Status
+        private int timer = countdownTime;
+        public int Timer
         {
-            get => status;
+            get => timer;
             set
             {
-                status = value;
-                OnPropertyChanged("Status");
+                timer = value;
+                OnPropertyChanged("Timer");
             }
         }
 
@@ -65,13 +65,11 @@ namespace DemoTable
             //Show stuff on the window
             InitializeComponent();
 
-            LabelStatus.DataContext = this;
-
             //Adds players to GUI, and to players
             for(int i = 0; i < 4; i++)
             {
-                players.Add(new Player(this, (i*2), (i*2)+1));
-                (MainGrid.Children[i + 1] as Frame).Content = players[i];
+                players.Add(new Player(this, (i*2), (i*2)+1, i));
+                (MainGrid.Children[i] as Frame).Content = players[i];
             }
 
             //Set up timer
@@ -86,17 +84,18 @@ namespace DemoTable
         {
             //Start the timer
             countDown.Start();
-            //make sure timer know we're in the countdown, not the game
+            //Make sure timer knows we're in the countdown, not the game
             isCountdownStarted = true;
+			//Reset status
+            players.ForEach(p => p.Status = "Tryk for at starte!");
             //Reset Player scores
-            GameStart.Invoke(this, new EventArgs());
+            players.ForEach(p => p.ResetScore());
         }
 
         private void CountDown_Tick(object sender, EventArgs e)
         {
             //Tick the timer down
             Timer -= 1;
-            Status = Timer.ToString();
             //When timer is over
             if (Timer <= 0)
             {
@@ -107,13 +106,10 @@ namespace DemoTable
                     isGameStarted = false;
                     //Stop the timer
                     countDown.Stop();
-                    //Marks players as ready to join
-                    players.ForEach(p => p.Status = "Tryk for at starte!");
                     //Marks players as not in-game
-                    players.ForEach(p => p.isPlayerJoined = false);
+                    players.ForEach(p => p.IsPlayerJoined = false);
                     //set timer to countdown
                     Timer = countdownTime;
-                    Status = "Klar";
                 }
 
                 //if the countdown is over
@@ -123,8 +119,7 @@ namespace DemoTable
                     isCountdownStarted = false;
                     //game starts
                     isGameStarted = true;
-                    //Marks players as in-game
-                    players.Where(p => p.isPlayerJoined).ToList().ForEach(p => p.Status = "TRYK! TRYK! TRYK!");
+                    players.Where(p => p.IsPlayerJoined).ToList().ForEach(p => p.Status = "0");
                     //setup game time
                     Timer = gameTime;
                 }
