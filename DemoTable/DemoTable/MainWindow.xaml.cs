@@ -66,11 +66,17 @@ namespace DemoTable
             InitializeComponent();
 
             //Adds players to GUI, and to players
+            players.Add(new Player(this, 1, 0, 0));
+            players.Add(new Player(this, 5, 4, 4));
+            players.Add(new Player(this, 9, 8, 8));
+            players.Add(new Player(this, 13, 12, 12));
+            
             for(int i = 0; i < 4; i++)
             {
-                players.Add(new Player(this, (i*2), (i*2)+1, i));
+                //players.Add(new Player(this, (i*2), (i*2)+1, i));
                 (MainGrid.Children[i] as Frame).Content = players[i];
             }
+            
 
             //Set up timer
             countDown.Interval = new TimeSpan(0, 0, 1);
